@@ -27,11 +27,11 @@ public class HandSanitizerBottle {
      * 'Utsav's Elixer
      * 'Bikers' Clean Hand'
      * 'Coffee Scent'
-     * @param brand
+     * @param brand is the private variable string
      */
     public void setBrand(String brand) {
-        List<String> validBrands = Arrays.asList("Utsav's Elixer","Biker's Clean Hand","Coffee Scent");
-        if(brand.matches(String.valueOf(validBrands)))
+        List<String> validBrands = Arrays.asList("Rachit's Elixer","Biker's Clean Hand","Coffee Scent");
+        if(validBrands.contains(brand))
         this.brand = brand;
         else
             throw new IllegalArgumentException("valid brands are:"+validBrands);
@@ -53,6 +53,9 @@ public class HandSanitizerBottle {
     }
 
     public void setVolumeRemaining(int volumeRemaining) {
+        if(volumeRemaining<=0 || volumeRemaining>volumeInMl)
+            throw new IllegalArgumentException("volume must be >0-"+volumeInMl);
+        else
         this.volumeRemaining = volumeRemaining;
     }
 
@@ -61,7 +64,10 @@ public class HandSanitizerBottle {
     }
 
     public void setAlcoholPercentage(float alcoholPercentage) {
+        if(alcoholPercentage>=90 && alcoholPercentage<=99)
         this.alcoholPercentage = alcoholPercentage;
+        else
+            throw new IllegalArgumentException("alcohol% must be 90-99");
     }
 
     public LocalDate getExpirationDate() {
@@ -69,7 +75,10 @@ public class HandSanitizerBottle {
     }
 
     public void setExpirationDate(LocalDate expirationDate) {
+        if(expirationDate.isAfter(LocalDate.now()))
         this.expirationDate = expirationDate;
+        else
+            throw new IllegalArgumentException("Expiration date need to be in future");
     }
 
     public double getPrice() {
@@ -77,6 +86,13 @@ public class HandSanitizerBottle {
     }
 
     public void setPrice(double price) {
+        if(price>0 && price<=100)
         this.price = price;
+        else
+             throw new IllegalArgumentException("price must be 1-100");
+    }
+
+    public String toString(){
+        return String.format("%s, holds %d ml and costs $%.2f", brand, volumeInMl, price);
     }
 }
